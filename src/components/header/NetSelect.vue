@@ -1,0 +1,108 @@
+<template>
+    <ul class="net-select-container">
+        <li class="net" :class="{ selectd: showNet }" @click="netSelect">
+            Test Test
+            <ul class="down" v-show="showNet">
+                <li class="not-hover">Select a network</li>
+                <li class="active">Polygon(Matic)</li>
+                <li>Polygon(Matic)</li>
+                <li>Polygon(Matic)</li>
+            </ul>
+        </li>
+        <li>0xd5e7****7a1e</li>
+    </ul>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const showNet = ref(false);
+const netSelect = () => {
+    showNet.value = !showNet.value;
+};
+</script>
+
+<style lang="scss" scoped>
+.net-select-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #999;
+    border-radius: 10px;
+    position: relative;
+    .net {
+        position: relative;
+        padding-right: 38px;
+        &::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 7px;
+            background: url("../../assets/vector.png");
+            background-size: cover;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.5s;
+        }
+    }
+    .selectd {
+        &::after {
+            transform: translateY(-50%) rotateX(180deg);
+        }
+    }
+    li {
+        height: 40px;
+        line-height: 40px;
+        border-right: 1px solid #999;
+        cursor: pointer;
+        padding: 0 20px;
+        &:last-child {
+            border-right: none;
+            cursor: auto;
+        }
+    }
+}
+.down {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    border-radius: 10px;
+    width: max-content;
+    z-index: 9;
+    border: 1px solid #999;
+    transition: all 0.3s;
+    li {
+        border: none;
+        border-bottom: 1px solid #999;
+        cursor: pointer;
+        padding: 0 40px 0 20px;
+        position: relative;
+        &:not(.not-hover):after {
+            content: "";
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 19px;
+            height: 19px;
+            border: 1px solid #999;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
+        &:first-child {
+            cursor: auto;
+        }
+        &:last-child {
+            border-bottom: none;
+            cursor: pointer;
+        }
+    }
+    .active {
+        &:not(.not-hover):after {
+            border: none;
+            background: url("../../assets/chain-select.png");
+            background-size: cover;
+        }
+    }
+}
+</style>
