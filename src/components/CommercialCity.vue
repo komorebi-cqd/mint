@@ -1,6 +1,12 @@
 <template >
     <div class="commercial-city">
         <div class="map-canvas" ref="centerCityDom"></div>
+        <div class="pay-list">
+            <PayFrame :price="800"/>
+            <PayFrame :price="1000"/>
+            <PayFrame :price="1300"/>
+            <PayFrame :price="1500"/>
+        </div>
     </div>
 </template>
 
@@ -9,6 +15,9 @@ import { ref, onMounted } from "vue";
 import * as echarts from "echarts";
 import { centralCity } from "../source/mapSVG";
 import { centralCityPoint } from "../source/mapPoint";
+import PayFrame from "./PayFrame.vue";
+
+const centerCityDom = ref("");
 
 let myChart;
 let option;
@@ -19,8 +28,7 @@ let cellSizeCoord = [
     (lngExtent[1] - lngExtent[0]) / cellCount[0],
     (latExtent[1] - latExtent[0]) / cellCount[1],
 ];
-// prettier-ignore
-function renderItem(params, api) {
+const renderItem = (params, api) =>{
     let context = params.context;
     let lngIndex = api.value(0);
     let latIndex = api.value(1);
@@ -44,7 +52,7 @@ function renderItem(params, api) {
         styleEmphasis: api.styleEmphasis(),
     };
 }
-function getCoord(params, api, lngIndex, latIndex) {
+const getCoord = (params, api, lngIndex, latIndex) => {
     let coords = params.context.coords || (params.context.coords = []);
     let key = lngIndex + "-" + latIndex;
     return (
@@ -54,14 +62,11 @@ function getCoord(params, api, lngIndex, latIndex) {
             +(lngExtent[0] + latIndex * cellSizeCoord[1]).toFixed(6),
         ]))
     );
-}
-
-const centerCityDom = ref("");
-
-function setMap(svg) {
+};
+const setMap = (svg) => {
     echarts.registerMap("sicily", { svg: svg });
     option = {
-      backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         visualMap: {
             type: "piecewise",
             inverse: true,
@@ -74,7 +79,7 @@ function setMap(svg) {
             backgroundColor: "transparent",
             dimension: 2,
             inRange: {
-                color: ['#ffffff'],
+                color: ["#ffffff"],
                 opacity: 0,
             },
             calculable: true,
@@ -92,15 +97,15 @@ function setMap(svg) {
                 return `${params.value[0]},${params.value[1]}`;
             },
         },
-        
+
         geo: [
             {
                 map: "sicily",
                 roam: true,
                 layoutCenter: ["50%", "50%"],
-                layoutSize: "90%",
+                layoutSize: "92%",
                 selectedMode: "single",
-                scaleLimit:{
+                scaleLimit: {
                     max: 2,
                     min: 0.5,
                 },
@@ -147,11 +152,10 @@ function setMap(svg) {
         ],
     };
     option && myChart.setOption(option);
-}
-
+};
 
 onMounted(() => {
-myChart = echarts.init(centerCityDom.value);
+    myChart = echarts.init(centerCityDom.value);
     setMap(centralCity);
 });
 </script>
@@ -164,11 +168,16 @@ myChart = echarts.init(centerCityDom.value);
     padding: 34px;
     box-sizing: border-box;
 }
-.map-canvas{
-  width: 100%;
-  height: 585px;
-  border: 1px solid #999;
-  background: #f7f7f7;
+.map-canvas {
+    width: 100%;
+    height: 585px;
+    background: url("../assets/background.png");
+    background-size: cover;
+}
+.pay-list{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 </style>

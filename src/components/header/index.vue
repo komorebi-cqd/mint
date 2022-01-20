@@ -16,7 +16,7 @@ import NetSelect from "./NetSelect.vue"
 
 <style scoped lang="scss">
 .header-container {
-    min-width: 100vw;
+    max-width: 100vw;
     height: 77px;
     background: #000000;
     color: #ffffff;

@@ -167,8 +167,8 @@ myChart = echarts.init(worldMapDom.value);
 .world-map-canvas{
   width: 100%;
   height: 585px;
-  border: 1px solid #999;
-  background: #f7f7f7;
+  background: url('../assets/background.png');
+  background-size: cover;
 }
 
 </style>

@@ -50,9 +50,8 @@ body {
     padding: 0;
     margin: 0;
     min-height: 100vh;
-    width: 100vw;
+    max-width: 100vw;
     font-weight: bold;
-    overflow-x: hidden;
 }
 ul {
     padding: 0;

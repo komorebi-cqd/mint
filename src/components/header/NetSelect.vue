@@ -29,6 +29,7 @@ const netSelect = () => {
     border: 1px solid #999;
     border-radius: 10px;
     position: relative;
+    background: rgba(19,18,19,.7);
     .net {
         position: relative;
         padding-right: 38px;
@@ -47,7 +48,7 @@ const netSelect = () => {
     }
     .selectd {
         &::after {
-            transform: translateY(-50%) rotateX(180deg);
+            transform: translateY(-50%) rotate(-180deg);
         }
     }
     li {
@@ -71,6 +72,7 @@ const netSelect = () => {
     z-index: 9;
     border: 1px solid #999;
     transition: all 0.3s;
+    background: rgba(19,18,19,.7);
     li {
         border: none;
         border-bottom: 1px solid #999;
