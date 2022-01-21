@@ -2,10 +2,30 @@
     <div class="commercial-city">
         <div class="map-canvas" ref="centerCityDom"></div>
         <div class="pay-list">
-            <PayFrame :price="800"/>
-            <PayFrame :price="1000"/>
-            <PayFrame :price="1300"/>
-            <PayFrame :price="1500"/>
+            <PayFrame :price="800">
+                <div class="tip">
+                    mint a piece of land at random coordinates
+                </div>
+            </PayFrame>
+            <PayFrame :price="1000">
+                <div class="tip">
+                    mint a piece of land at specified coordinates
+                </div>
+            </PayFrame>
+            <PayFrame :price="1300">
+                <template #tipList>
+                    <ul class="tip-list">
+                        <li v-for="(it, i) in tip" :key="i">{{ it }}</li>
+                    </ul>
+                </template>
+            </PayFrame>
+            <PayFrame :price="1500">
+                <template #tipList>
+                    <ul class="tip-list">
+                        <li v-for="(it, i) in tip2" :key="i">{{ it }}</li>
+                    </ul>
+                </template>
+            </PayFrame>
         </div>
     </div>
 </template>
@@ -17,8 +37,22 @@ import { centralCity } from "../source/mapSVG";
 import { centralCityPoint } from "../source/mapPoint";
 import PayFrame from "./PayFrame.vue";
 
-const centerCityDom = ref("");
 
+const tip = [
+    "mint a piece of land at random  coordinates",
+    "enjoy 5 sets of model houses of your choice",
+    "enjoy 3 times free decoration service",
+];
+const tip2 = [
+    "mint a piece of land at specified coordinates",
+    "enjoy 5 sets of model houses of your choice",
+    "enjoy 3 times free decoration service",
+];
+
+
+
+//以下是地图生成
+const centerCityDom = ref("");
 let myChart;
 let option;
 let lngExtent = [1123, 3313];
@@ -28,7 +62,7 @@ let cellSizeCoord = [
     (lngExtent[1] - lngExtent[0]) / cellCount[0],
     (latExtent[1] - latExtent[0]) / cellCount[1],
 ];
-const renderItem = (params, api) =>{
+const renderItem = (params, api) => {
     let context = params.context;
     let lngIndex = api.value(0);
     let latIndex = api.value(1);
@@ -51,7 +85,7 @@ const renderItem = (params, api) =>{
         }),
         styleEmphasis: api.styleEmphasis(),
     };
-}
+};
 const getCoord = (params, api, lngIndex, latIndex) => {
     let coords = params.context.coords || (params.context.coords = []);
     let key = lngIndex + "-" + latIndex;
@@ -161,23 +195,25 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/minix.scss";
 .commercial-city {
-    width: 100%;
-    background: #f7f7f7;
-    height: 980px;
-    padding: 34px;
-    box-sizing: border-box;
+    @include map-background($height:980px);
 }
 .map-canvas {
-    width: 100%;
-    height: 585px;
-    background: url("../assets/background.png");
-    background-size: cover;
+    @include canvas-background($height:585px);
 }
-.pay-list{
+.pay-list {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    .tip {
+        color: #666;
+        font-size: 14px;
+        text-align: center;
+    }
 }
 
+.tip-list {
+    @include tip-list;
+}
 </style>

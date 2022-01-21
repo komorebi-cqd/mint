@@ -1,0 +1,38 @@
+@mixin map-background($height){
+    width: 100%;
+    background: #f7f7f7;
+    height: $height;
+    padding: 34px;
+    box-sizing: border-box;
+}
+
+@mixin canvas-background($height){
+    width: 100%;
+    height: $height;
+    background: url("../assets/background.png");
+    background-size: 100% 100%;
+}
+
+@mixin tip-list{
+    color: #666;
+    font-size: 12px;
+    height: 112px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    li {
+        padding-left: 15px;
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 6px;
+            height: 6px;
+            background: #ff0e6b;
+            border-radius: 2px;
+            transform: rotate(45deg);
+        }
+    }
+}

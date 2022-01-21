@@ -5,10 +5,8 @@
                 <strong>{{ price }}</strong
                 >POT
             </div>
-            <!-- <div class="tip">mint a piece of land at random coordinates</div> -->
-            <ul class="tip-list">
-                <li v-for="(it, i) in tip" :key="i">{{ it }}</li>
-            </ul>
+            <slot></slot>
+            <slot name="tipList"></slot>
             <button class="pay-button">Mint {{ price }} POT</button>
         </div>
     </div>
@@ -20,16 +18,7 @@ defineProps({
     price: Number,
 });
 
-const tip = [
-    "mint a piece of land at random  coordinates",
-    "enjoy 5 sets of model houses of your choice",
-    "enjoy 3 times free decoration service",
-];
-const tip2 = [
-    "mint a piece of land at specified coordinates",
-    "enjoy 5 sets of model houses of your choice",
-    "enjoy 3 times free decoration service",
-];
+
 </script>
 
 <style lang="scss" scoped>
@@ -52,11 +41,7 @@ const tip2 = [
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        .tip {
-            color: #666;
-            font-size: 14px;
-            text-align: center;
-        }
+        
     }
 }
 .pay-price {
@@ -83,27 +68,5 @@ const tip2 = [
     font-family: "XMetaverse-Bold";
 }
 
-.tip-list {
-    color: #666;
-    font-size: 12px;
-    height: 112px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    li{
-        padding-left: 15px;
-        position: relative;
-        &::before{
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 5px;
-            width: 6px;
-            height: 6px;
-            background: #ff0e6b;
-            border-radius: 2px;
-            transform: rotate(45deg);
-        }
-    }
-}
+
 </style>

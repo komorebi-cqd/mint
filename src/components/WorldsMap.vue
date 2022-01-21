@@ -1,6 +1,32 @@
 <template >
     <div class="world-map">
         <div class="world-map-canvas" ref="worldMapDom"></div>
+        <div class="pay-list">
+            <PayFrame :price="200">
+                <div class="tip">
+                    mint a piece of land at random coordinates
+                </div>
+            </PayFrame>
+            <PayFrame :price="400">
+                <div class="tip">
+                    mint a piece of land at specified coordinates
+                </div>
+            </PayFrame>
+            <PayFrame :price="700">
+                <template #tipList>
+                    <ul class="tip-list">
+                        <li v-for="(it, i) in tip" :key="i">{{ it }}</li>
+                    </ul>
+                </template>
+            </PayFrame>
+            <PayFrame :price="900">
+                <template #tipList>
+                    <ul class="tip-list">
+                        <li v-for="(it, i) in tip2" :key="i">{{ it }}</li>
+                    </ul>
+                </template>
+            </PayFrame>
+        </div>
     </div>
 </template>
 
@@ -9,7 +35,20 @@ import { ref, onMounted } from "vue";
 import * as echarts from "echarts";
 import { worldMap } from "../source/mapSVG";
 import { worldMapPoint } from "../source/mapPoint";
+import PayFrame from "./PayFrame.vue";
 
+const tip = [
+    "mint a piece of land at random  coordinates",
+    "enjoy 5 sets of model houses of your choice",
+    "enjoy 3 times free decoration service",
+];
+const tip2 = [
+    "mint a piece of land at specified coordinates",
+    "enjoy 5 sets of model houses of your choice",
+    "enjoy 3 times free decoration service",
+];
+
+//以下是地图生成
 let myChart;
 let option;
 let lngExtent = [2077, 4264];
@@ -20,7 +59,7 @@ let cellSizeCoord = [
     (latExtent[1] - latExtent[0]) / cellCount[1],
 ];
 // prettier-ignore
-function renderItem(params, api) {
+const renderItem = (params, api) =>{
     let context = params.context;
     let lngIndex = api.value(0);
     let latIndex = api.value(1);
@@ -44,7 +83,7 @@ function renderItem(params, api) {
         styleEmphasis: api.styleEmphasis(),
     };
 }
-function getCoord(params, api, lngIndex, latIndex) {
+const getCoord = (params, api, lngIndex, latIndex) => {
     let coords = params.context.coords || (params.context.coords = []);
     let key = lngIndex + "-" + latIndex;
     return (
@@ -54,14 +93,14 @@ function getCoord(params, api, lngIndex, latIndex) {
             +(lngExtent[0] + latIndex * cellSizeCoord[1]).toFixed(6),
         ]))
     );
-}
+};
 
 const worldMapDom = ref("");
 
-function setMap(svg) {
+const setMap = (svg) => {
     echarts.registerMap("sicily", { svg: svg });
     option = {
-      backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         visualMap: {
             type: "piecewise",
             inverse: true,
@@ -71,11 +110,11 @@ function setMap(svg) {
             pieces: [],
             borderColor: "#ccc",
             borderWidth: 2,
-            backgroundColor: "transparent",
+            // backgroundColor: "transparent",
             dimension: 2,
             inRange: {
-                color: ['#ffffff'],
-                opacity: 0,
+                color: ["#ffffff"],
+                opacity: 0.01,
             },
             calculable: true,
         },
@@ -92,15 +131,15 @@ function setMap(svg) {
                 return `${params.value[0]},${params.value[1]}`;
             },
         },
-        
+
         geo: [
             {
                 map: "sicily",
                 roam: true,
                 layoutCenter: ["50%", "50%"],
-                layoutSize: "90%",
+                layoutSize: "92%",
                 selectedMode: "single",
-                scaleLimit:{
+                scaleLimit: {
                     max: 2,
                     min: 0.5,
                 },
@@ -147,28 +186,36 @@ function setMap(svg) {
         ],
     };
     option && myChart.setOption(option);
-}
-
+};
 
 onMounted(() => {
-myChart = echarts.init(worldMapDom.value);
+    myChart = echarts.init(worldMapDom.value);
     setMap(worldMap);
 });
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/minix.scss";
+
 .world-map {
-    width: 100%;
-    background: #f7f7f7;
-    height: 980px;
-    padding: 34px;
-    box-sizing: border-box;
+    @include map-background($height: 980px);
 }
-.world-map-canvas{
-  width: 100%;
-  height: 585px;
-  background: url('../assets/background.png');
-  background-size: cover;
+.world-map-canvas {
+    @include canvas-background($height: 585px);
 }
 
+.pay-list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    .tip {
+        color: #666;
+        font-size: 14px;
+        text-align: center;
+    }
+}
+
+.tip-list {
+    @include tip-list;
+}
 </style>
