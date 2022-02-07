@@ -1,25 +1,70 @@
 <template>
     <ul class="net-select-container">
         <li class="net" :class="{ selectd: showNet }" @click="netSelect">
-            Test Test
+            {{ chainName }}
             <ul class="down" v-show="showNet">
                 <li class="not-hover">Select a network</li>
-                <li class="active">Polygon(Matic)</li>
-                <li>Polygon(Matic)</li>
-                <li>Polygon(Matic)</li>
+                <li
+                    v-for="net in netWorks"
+                    :key="net.chainId"
+                    @click="switchNet(net)"
+                    :class="{
+                        active: parseInt(net.chainId) === parseInt(chainId),
+                    }"
+                >
+                    {{ net.chainName }}
+                </li>
             </ul>
         </li>
-        <li>0xd5e7****7a1e</li>
+        <li>{{ spliceAddress(address) }}</li>
     </ul>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref, computed } from "vue";
+import { netWorks, errorChainMsg } from "../../config";
+import { useStore } from "vuex";
 
+const store = useStore();
 const showNet = ref(false);
+
+defineProps({
+    address: String,
+});
+
+const chainId = computed(() => store.state.chainId);
+
+// const netName = computed(() => store.state.metaMaskNetWork);
+
+const chainName = computed(() => {
+    const cName = netWorks.filter(
+        (it) => parseInt(it.chainId) === parseInt(chainId.value)
+    );
+    return cName[0] ? cName[0].chainName : errorChainMsg;
+});
+
 const netSelect = () => {
     showNet.value = !showNet.value;
 };
+
+const spliceAddress = (address) =>
+    (address && address.slice(0, 5) + "****" + address.slice(-4)) || "";
+
+const switchNet = (net) => {
+    store.dispatch("switchChainId", net);
+};
+
+const listenClick = (e) => {
+    if (showNet.value && !e.target.classList.contains("net")) {
+        showNet.value = false;
+    }
+};
+onMounted(() => {
+    window.addEventListener("click", listenClick, false);
+});
+onUnmounted(() => {
+    window.removeEventListener("click", listenClick, false);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -29,7 +74,7 @@ const netSelect = () => {
     border: 1px solid #999;
     border-radius: 10px;
     position: relative;
-    background: rgba(19,18,19,.7);
+    background: rgba(19, 18, 19, 0.7);
     .net {
         position: relative;
         padding-right: 38px;
@@ -43,7 +88,7 @@ const netSelect = () => {
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            transition: all 0.5s;
+            transition: all 0.2s;
         }
     }
     .selectd {
@@ -72,7 +117,7 @@ const netSelect = () => {
     z-index: 9;
     border: 1px solid #999;
     transition: all 0.3s;
-    background: rgba(19,18,19,.7);
+    background: rgba(19, 18, 19, 0.7);
     li {
         border: none;
         border-bottom: 1px solid #999;

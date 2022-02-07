@@ -1,15 +1,24 @@
 <script setup>
 import logo from "../../assets/logo.png";
-import NetSelect from "./NetSelect.vue"
+import NetSelect from "./NetSelect.vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 
+const account = computed(() => {
+    return store.state.account;
+});
+const connect = () => {
+    store.dispatch("connect");
+};
 </script>
 
 <template>
     <header class="header-container">
         <div class="header">
             <img class="logo" :src="logo" alt="logo" />
-            <!-- <button class="connect">Connect</button> -->
-            <NetSelect />
+            <button class="connect" @click="connect" v-if="!account">Connect</button>
+            <NetSelect :address="account" v-else/>
         </div>
     </header>
 </template>

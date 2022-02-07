@@ -5,12 +5,19 @@ import MyLand from "./components/MyLand.vue";
 import OriginalCity from "./components/OriginalCity.vue";
 import WorldMap from "./components/WorldsMap.vue";
 
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
+import { useStore } from 'vuex'
+const store = useStore();
 const currentPage = ref(1);
 
 const switchPage = (page) => {
     currentPage.value = page;
 };
+
+onMounted(() => {
+    store.dispatch("connect");
+});
+
 </script>
 
 <template>
