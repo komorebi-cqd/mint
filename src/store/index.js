@@ -8,6 +8,7 @@ export default createStore({
             account: localStorage.getItem('account') || '',
             chainId: '',
             metaMaskNetWork: local_nets && JSON.parse(local_nets) || {},
+            hiddenPointBox: false,
         }
     },
     mutations: {

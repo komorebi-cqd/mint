@@ -1,8 +1,9 @@
 <template >
     <div class="original-city">
         <div class="original-city-warp">
-            <img :src="originalCityMap" alt="" />
+            <img :src="originalCityMap" alt="" class="originalCityMap"/>
             <div class="tip">
+                <img src="../assets/notice.png" alt="">
                 No auction has started, please contact the scientist if you wish
                 to enter
             </div>
@@ -28,7 +29,7 @@ import originalCityMap from "../assets/center-city.png";
         text-align: center;
         background-position: 0px 200px;
         background-origin: border-box;
-        img {
+        .originalCityMap {
             width: 540px;
             height: 540px;
             display: block;
@@ -40,9 +41,14 @@ import originalCityMap from "../assets/center-city.png";
             font-weight: bold;
             color: #333333;
             padding-left: 42px;
-            &::before{
-                background: url("../assets/notice.png") no-repeat;
-                background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img{
+                width: 38px;
+                height: 34px;
+                display: block;
+                margin-right: 13px;
             }
         }
     }

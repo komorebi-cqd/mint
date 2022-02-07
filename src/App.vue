@@ -5,8 +5,8 @@ import MyLand from "./components/MyLand.vue";
 import OriginalCity from "./components/OriginalCity.vue";
 import WorldMap from "./components/WorldsMap.vue";
 
-import { ref,onMounted } from "vue";
-import { useStore } from 'vuex'
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 const store = useStore();
 const currentPage = ref(1);
 
@@ -17,7 +17,6 @@ const switchPage = (page) => {
 onMounted(() => {
     store.dispatch("connect");
 });
-
 </script>
 
 <template>
@@ -59,6 +58,24 @@ body {
     min-height: 100vh;
     max-width: 100vw;
     font-weight: bold;
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background: rgb(239, 239, 239);
+        border-radius: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #bfbfbf;
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-corner {
+        background: #179a16;
+    }
+}
+.hidden-scroll {
+    overflow: hidden;
 }
 ul {
     padding: 0;

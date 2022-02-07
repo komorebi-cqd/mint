@@ -7,13 +7,14 @@
             </div>
             <slot></slot>
             <slot name="tipList"></slot>
-            <button class="pay-button">Mint {{ price }} POT</button>
+            <slot name="payButton"></slot>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+
 defineProps({
     price: Number,
 });
@@ -55,18 +56,7 @@ defineProps({
         padding-right: 10px;
     }
 }
-.pay-button {
-    width: 200px;
-    height: 40px;
-    background: #ff0e6b;
-    border-radius: 20px;
-    font-size: 16px;
-    border: none;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: "XMetaverse-Bold";
-}
+
 
 
 </style>
