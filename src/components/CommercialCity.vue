@@ -55,9 +55,9 @@
                 purchase
             </div>
             <div class="input-point">
-                <input type="text" />
+                <input type="text" v-model="pointOne" @input="handleNumber"/>
                 <span>,</span>
-                <input type="text" />
+                <input type="text" v-model="pointTwo" @input="handleNumber2"/>
             </div>
             <button class="pay-button" @click="payButton(appointPointPrice)">
                 Mint {{ appointPointPrice }} POT
@@ -69,13 +69,16 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import * as echarts from "echarts";
-import { centralCity } from "../source/mapSVG";
+import { centralCity } from "../source/mapSVG.js";
 import { centralCityPoint } from "../source/mapPoint";
 import PayFrame from "./PayFrame.vue";
 import MessageBox from "./MessageBox.vue";
 import { useStore } from "vuex";
 const store = useStore();
 const appointPointPrice = ref(0);
+const pointOne = ref('');
+const pointTwo = ref('');
+console.log(pointOne.value,pointTwo.value);
 
 const hiddenPointBox = computed(() => store.state.hiddenPointBox);
 
@@ -85,9 +88,15 @@ const showMessageBox = (pointPrice) => {
 };
 
 const payButton = (price) => {
-    console.log("随机坐标价格", price);
+    console.log("指定坐标价格", price,pointOne.value,pointTwo.value);
 };
 
+const handleNumber = (e) => {
+    pointOne.value = e.target.value.replace(/[^\d-]/g,'')
+}
+const handleNumber2 = (e) => {
+    pointTwo.value = e.target.value.replace(/[^\d-]/g,'')
+}
 const tip = [
     "mint a piece of land at random  coordinates",
     "enjoy 5 sets of model houses of your choice",

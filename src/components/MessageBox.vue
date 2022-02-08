@@ -11,6 +11,7 @@
 import { computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 
+
 const store = useStore();
 
 const hiddenPointBox = computed(() => store.state.hiddenPointBox);
@@ -18,7 +19,7 @@ const hiddenPointBox = computed(() => store.state.hiddenPointBox);
 const close = () => {
     store.commit("saveState", {
         key: "hiddenPointBox",
-        value: !hiddenPointBox.value,
+        value: false,
     });
 };
 
@@ -43,7 +44,7 @@ watchEffect(() => {
     z-index: 99;
 }
 .box {
-    width: 480px;
+    min-width: 480px;
     min-height: 340px;
     background: #ffffff;
     border-radius: 10px;

@@ -9,8 +9,11 @@
   "dependencies": {
     "axios": "^0.25.0",
     "echarts": "^5.2.2",
+    "element-plus": "^2.0.1",
     "sass": "^1.49.0",
+    "unplugin-element-plus": "^0.2.0",
     "vue": "^3.2.25",
+    "vue-clipboard3": "^1.0.1",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

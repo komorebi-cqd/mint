@@ -69,7 +69,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import * as echarts from "echarts";
-import { worldMap } from "../source/mapSVG";
+import { worldMap } from "../source/mapSVG.js";
 import { worldMapPoint } from "../source/mapPoint";
 import PayFrame from "./PayFrame.vue";
 import MessageBox from "./MessageBox.vue";
