@@ -78,8 +78,6 @@ const store = useStore();
 const appointPointPrice = ref(0);
 const pointOne = ref('');
 const pointTwo = ref('');
-console.log(pointOne.value,pointTwo.value);
-
 const hiddenPointBox = computed(() => store.state.hiddenPointBox);
 
 const showMessageBox = (pointPrice) => {
@@ -247,6 +245,9 @@ const setMap = (svg) => {
 
 onMounted(() => {
     myChart = echarts.init(centerCityDom.value);
+    myChart.on("click", { seriesIndex: 0 }, function (event) {
+        console.log(event);
+    });
     setMap(centralCity);
 });
 </script>
