@@ -14,7 +14,8 @@
     "unplugin-element-plus": "^0.2.0",
     "vue": "^3.2.25",
     "vue-clipboard3": "^1.0.1",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "web3": "^1.9.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",

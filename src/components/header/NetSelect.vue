@@ -5,7 +5,7 @@
             <ul class="down" v-show="showNet">
                 <li class="not-hover">Select a network</li>
                 <li
-                    v-for="net in netWorks"
+                    v-for="net in pro_netWorks"
                     :key="net.chainId"
                     @click="switchNet(net)"
                     :class="{
@@ -22,7 +22,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, computed } from "vue";
-import { netWorks, errorChainMsg } from "../../config";
+import { pro_netWorks, errorChainMsg } from "../../config";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -37,7 +37,7 @@ const chainId = computed(() => store.state.chainId);
 // const netName = computed(() => store.state.metaMaskNetWork);
 
 const chainName = computed(() => {
-    const cName = netWorks.filter(
+    const cName = pro_netWorks.filter(
         (it) => parseInt(it.chainId) === parseInt(chainId.value)
     );
     return cName[0] ? cName[0].chainName : errorChainMsg;

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { metaMaskDownload } from '../config'
+import Web3 from 'web3'
 const local_nets = localStorage.getItem('net')
 
 export default createStore({
@@ -33,7 +34,7 @@ export default createStore({
             const ethereum = window.ethereum
             let web3 = null
             if (window.web3) {
-                web3 = new window.Web3(ethereum);
+                web3 = new Web3(ethereum);
                 const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
                 const chainId = await ethereum.request({ method: 'eth_chainId' })
                 commit('saveAccount', accounts[0])
@@ -82,6 +83,7 @@ export default createStore({
                 });
                 commit('saveMetaMaskNetWork', { ...chainObj })
             } catch (switchError) {
+                console.log(switchError,'switchError:::::::::')
                 if (switchError.code === 4902) {
                     try {
                         await ethereum.request({
